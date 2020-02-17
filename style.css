@@ -5,4 +5,5 @@ body {
 canvas {
     border: 1px black solid;
     background-color: gainsboro;
+    cursor: pointer;
 }

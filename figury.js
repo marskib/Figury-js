@@ -1,3 +1,28 @@
+"use strict";
+
+let kanwy = Array.from(document.querySelectorAll('canvas'));
+let ctxy = []; //contexty odpowiadajace kanwom
+
+
+
+let handleKlikOnKanwa = function (event) {
+    console.log("aaaaaaaaaaaa");
+    event.target.getContext("2d").fillRect(10,10,100,100);
+
+}
+
+
+kanwy.forEach(kanwa=>kanwa.onclick=handleKlikOnKanwa);
+
+//wypelnienie tablicy kontextow ctxy:
+kanwy.forEach(kanwa=>ctxy.push(kanwa.getContext("2d")));
+
+//rysowanie testowe - wywalic....
+ctxy.forEach(elem=>rysujTrojkat(elem, 0,0, 100,100, 150,100));
+
+
+
+
 function rysujTrojkat(ctx, x1,y1, x2,y2, x3,y3) {
     ctx.beginPath();
     ctx.moveTo(x1,y1);
@@ -20,6 +45,7 @@ function rysujLinie(ctx, x1,y1, x2,y2) {
     ctx.strokeStyle = '#666666';
     ctx.stroke();        
 }
+
 
 window.onload=function() {
     //Rysowanie:
@@ -94,24 +120,5 @@ window.onload=function() {
     canvasElement = document.querySelector("#k8");
     ctx = canvasElement.getContext("2d");    
     rysujLinie(ctx, 40,10, 150,190);
-
-    
-
-
-
-
-    //ctx.beginPath();
-    // ctx.moveTo(20, 20);
-    // ctx.lineTo(20, 150);
-    // ctx.lineTo(150, 150);
-    // ctx.lineTo(150, 20);
-    // ctx.closePath();
-
-    //ctx.fillRect(10,10,100,100);
-    //ctx.fill;
-    
-
-
-
 
   }
