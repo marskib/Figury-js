@@ -1,0 +1,8 @@
+body {
+    background-color: #fef3dd
+}
+
+canvas {
+    border: 1px black solid;
+    background-color: gainsboro;
+}
