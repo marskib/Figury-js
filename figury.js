@@ -58,16 +58,13 @@ window.onload=function() {
     //the Line vertical:
     canvasElement = document.querySelector("#k3");
     ctx = canvasElement.getContext("2d");
-    ctx.rect(100,30, 0,150);
-    //the outline
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#666666';
-    ctx.stroke();            
+    this.rysujLinie(ctx, 100,10, 100, 180);
 
+   
     //the Square:
     canvasElement = document.querySelector("#k4");
     ctx = canvasElement.getContext("2d");
-    ctx.rect(30,30, 100,100);
+    ctx.rect(40,40, 110,110);
     //the outline
     ctx.lineWidth = 2;
     ctx.strokeStyle = '#666666';
@@ -76,11 +73,8 @@ window.onload=function() {
     //the Line horizontal:
     canvasElement = document.querySelector("#k5");
     ctx = canvasElement.getContext("2d");
-    ctx.rect(30,100, 150,0);
-    //the outline
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#666666';
-    ctx.stroke();            
+    rysujLinie(ctx, 30,100, 180,100);
+        
 
     //the Rectangle horizontal:
     canvasElement = document.querySelector("#k6");
@@ -94,12 +88,12 @@ window.onload=function() {
     //the Triangle 2:
     canvasElement = document.querySelector("#k7");
     ctx = canvasElement.getContext("2d");
-    this.rysujTrojkat(ctx, 10,180, 180,180, 100,10);
+    this.rysujTrojkat(ctx, 20,180, 180,180, 100,10);
 
     //the Line askew:
     canvasElement = document.querySelector("#k8");
     ctx = canvasElement.getContext("2d");    
-    rysujLinie(ctx, 10,10, 180,180);
+    rysujLinie(ctx, 40,10, 150,190);
 
     
 
