@@ -1,9 +1,27 @@
+html {
+    --szer-ski: 70vw;
+    --wys-ski: 90vh;
+}
+
+
 body {
     background-color: #fef3dd
 }
 
+
+div.content {
+    width: var(--szer-ski);
+    height: var(--wys-ski);
+    margin-top: calc(calc(100vh - var(--wys-ski))/2);
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 2px solid black;
+    
+}
+
 canvas {
     border: 1px black solid;
-    background-color: gainsboro;
+    background-color: #aaa;
     cursor: pointer;
 }

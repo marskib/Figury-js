@@ -1,24 +1,82 @@
 "use strict";
 
+//Klasa definijaca Kanwe; onomastyka TypMojaKanwa -> TMKanwa :
+class TMKanwa {
+    constructor(kanwa, dx, dy) {
+        this.kanwa = kanwa;
+        this.ctx   = kanwa.getContext("2d");   //pole na context
+        this.dx    = dx;    //szerokosc kanwy
+        this.dy    = dy;    //wysokosc kanwy  
+
+        this.kanwa.style.backgroundColor = "red";
+        // this.kanwa.style.width = "20px";
+        this.kanwa.style.width  = dx+"px";
+        this.kanwa.style.height = dy+"px";        
+    }
+    
+    zrobOutline() {
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeStyle = '#666666';
+        this.ctx.stroke();        
+    }
+
+    rysujLinie(x1,y1, x2,y2) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x1,y1);
+        this.ctx.lineTo(x2,y2);    
+        //the outline
+        this.zrobOutline();
+    }
+
+}   //koniec TMKanwa
+
+
+
+//
+//  let probna = new TMKanwa(document.querySelector('canvas').getContext("2d"), 300,300);
+//probna.rysujLinie(10,10,40,40);
+
+
+//Tablica 'kanwy' zostaje 'pobrana' z dokumentu:
 let kanwy = Array.from(document.querySelectorAll('canvas'));
-let ctxy = []; //contexty odpowiadajace kanwom
 
 
 
 let handleKlikOnKanwa = function (event) {
     console.log("aaaaaaaaaaaa");
     event.target.getContext("2d").fillRect(10,10,100,100);
-
+    // event.target.ctx.fillRect(10,10,100,100);
 }
 
 
-kanwy.forEach(kanwa=>kanwa.onclick=handleKlikOnKanwa);
 
-//wypelnienie tablicy kontextow ctxy:
-kanwy.forEach(kanwa=>ctxy.push(kanwa.getContext("2d")));
+//Tablica obiektów TMKanwa:
+let kanwyObj = [];
+kanwy.forEach(kanwa=>kanwyObj.push(new TMKanwa(kanwa, 250,250)));
+
+//Definiwanie zdarzenia onClick na każdej z kanw:
+kanwyObj.forEach(elem=>elem.kanwa.onclick=handleKlikOnKanwa);
+
+
+//rysowanie linii na kazdej:
+kanwyObj.forEach((elem,ind)=>elem.rysujLinie(10,10,150,20*ind));
+
+
+
+
+
+
+
+
+
+
 
 //rysowanie testowe - wywalic....
-ctxy.forEach(elem=>rysujTrojkat(elem, 0,0, 100,100, 150,100));
+//ctxy.forEach(elem=>rysujTrojkat(elem, 0,0, 100,100, 150,100));
+//kanwyObj.forEach(blabla=>blabla.rysujLinie(10,10, 100,10));
+// for (let i=0; i<kanwyObj.length; i++) {
+//     kanwyObj[i].rysujLinie(10,10,100,10);
+// }
 
 
 
@@ -35,7 +93,7 @@ function rysujTrojkat(ctx, x1,y1, x2,y2, x3,y3) {
     ctx.stroke();    
     //ctx.fill();
 }
-
+/*
 function rysujLinie(ctx, x1,y1, x2,y2) {
     ctx.beginPath();
     ctx.moveTo(x1,y1);
@@ -45,8 +103,9 @@ function rysujLinie(ctx, x1,y1, x2,y2) {
     ctx.strokeStyle = '#666666';
     ctx.stroke();        
 }
+*/
 
-
+/*
 window.onload=function() {
     //Rysowanie:
 
@@ -122,3 +181,4 @@ window.onload=function() {
     rysujLinie(ctx, 40,10, 150,190);
 
   }
+  */
