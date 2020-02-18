@@ -3,20 +3,20 @@
 //Klasa definijaca Kanwe; onomastyka TypMojaKanwa -> TMKanwa :
 class TMKanwa {
     constructor(kanwa, dx, dy) {
-        this.kanwa = kanwa;
+        this.kanwa = kanwa; //odnosnik reprezentujący fizyczna kanwe
         this.ctx   = kanwa.getContext("2d");   //pole na context
-        this.dx    = dx;    //szerokosc kanwy
-        this.dy    = dy;    //wysokosc kanwy  
-
-        this.kanwa.style.backgroundColor = "red";
-        // this.kanwa.style.width = "20px";
-        this.kanwa.style.width  = dx+"px";
-        this.kanwa.style.height = dy+"px";        
+        this.dx    = dx;    //szerokosc kanwy w % rodzica
+        this.dy    = dy;    //wysokosc kanwy  w % rodzica
+        //
+        // this.kanwa.style.backgroundColor = "red";
+        //ustalenie fizycznych rozmiarow (bedzie mialo przelozenie na ekran!):
+        this.kanwa.style.width  = dx+"%";
+        this.kanwa.style.height = dy+"%";        
     }
     
     zrobOutline() {
-        this.ctx.lineWidth = 2;
-        this.ctx.strokeStyle = '#666666';
+        this.ctx.lineWidth = 4;
+        this.ctx.strokeStyle = '#000000';
         this.ctx.stroke();        
     }
 
@@ -25,6 +25,12 @@ class TMKanwa {
         this.ctx.moveTo(x1,y1);
         this.ctx.lineTo(x2,y2);    
         //the outline
+        this.zrobOutline();
+    }
+
+    rysujOkrag(x0,y0,r) {
+        //this.ctx.arc(100, 100, 50, 0, Math.PI*2, true);
+        this.ctx.arc(x0,y0, r, 0, Math.PI*2, true);
         this.zrobOutline();
     }
 
@@ -44,22 +50,32 @@ let kanwy = Array.from(document.querySelectorAll('canvas'));
 
 let handleKlikOnKanwa = function (event) {
     console.log("aaaaaaaaaaaa");
-    event.target.getContext("2d").fillRect(10,10,100,100);
-    // event.target.ctx.fillRect(10,10,100,100);
+    //event.target.getContext("2d").fillRect(10,10,100,100);
+    //'Znikniecie' wszystkich innych niz kliknieta:
+    for (let i=0; i<kanwyObj.length; i++) {
+        if (kanwyObj[i].kanwa!==event.target) {
+            // kanwyObj[i].kanwa.style.backgroundColor = "red";
+            kanwyObj[i].kanwa.style.display = "none";
+        }
+    }
+    event.target.style.width  = "100%";
+    event.target.style.height = "100%";
 }
 
 
 
 //Tablica obiektów TMKanwa:
 let kanwyObj = [];
-kanwy.forEach(kanwa=>kanwyObj.push(new TMKanwa(kanwa, 250,250)));
+// kanwy.forEach(kanwa=>kanwyObj.push(new TMKanwa(kanwa, 32.9,32.9)));
+kanwy.forEach(kanwa=>kanwyObj.push(new TMKanwa(kanwa, 32,32)));
 
 //Definiwanie zdarzenia onClick na każdej z kanw:
 kanwyObj.forEach(elem=>elem.kanwa.onclick=handleKlikOnKanwa);
 
 
 //rysowanie linii na kazdej:
-kanwyObj.forEach((elem,ind)=>elem.rysujLinie(10,10,150,20*ind));
+//kanwyObj.forEach((elem,ind)=>elem.rysujLinie(10,10,150,20*ind));
+kanwyObj.forEach((elem,ind)=>elem.rysujOkrag(100,100,10*(ind+1)));
 
 
 
