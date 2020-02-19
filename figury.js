@@ -47,19 +47,33 @@ class TMKanwa {
 let kanwy = Array.from(document.querySelectorAll('canvas'));
 
 
-
+let stanDuza = false;
 let handleKlikOnKanwa = function (event) {
-    console.log("aaaaaaaaaaaa");
+/* pOKAZANIE DUZEJ CANWY Z POJEDYNCZA DUZA FIGURA */
     //event.target.getContext("2d").fillRect(10,10,100,100);
     //'Znikniecie' wszystkich innych niz kliknieta:
-    for (let i=0; i<kanwyObj.length; i++) {
-        if (kanwyObj[i].kanwa!==event.target) {
-            // kanwyObj[i].kanwa.style.backgroundColor = "red";
-            kanwyObj[i].kanwa.style.display = "none";
+
+
+    console.log(stanDuza)
+
+    if (!stanDuza) {
+        for (let i=0; i<kanwyObj.length; i++) {
+            if (kanwyObj[i].kanwa!==event.target) {
+                kanwyObj[i].kanwa.style.display = "none";
+            }
         }
+        event.target.style.width  = "100%";
+        event.target.style.height = "100%";
+        stanDuza = true;
     }
-    event.target.style.width  = "100%";
-    event.target.style.height = "100%";
+    else {
+        event.target.style.width  = "32%";
+        event.target.style.height = "32%";
+        for (let i=0; i<kanwyObj.length; i++) {
+            (kanwyObj[i].kanwa.style.display = "inline-block")
+        }
+        stanDuza = false;
+    }
 }
 
 

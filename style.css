@@ -22,9 +22,7 @@ div.content {
     margin-top: calc(calc(100vh - var(--wys-ski))/2);
     margin-left: auto;
     margin-right: auto;
-
     border: 2px solid black;
-    
 }
 
 canvas {
