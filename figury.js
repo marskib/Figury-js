@@ -36,10 +36,21 @@ class TMKanwa {
 
     rysujKwadrat(x0,y0,r) {
         this.ctx.beginPath();
-        this.ctx.moveTo(x0-r/2,y0-r/2);
+        this.ctx.moveTo(x0-r/2, y0-r/2);
         this.ctx.lineTo(x0+r/2, y0-r/2);    
         this.ctx.lineTo(x0+r/2, y0+r/2);    
         this.ctx.lineTo(x0-r/2, y0+r/2);    
+        this.ctx.closePath();
+        //the outline
+        this.zrobOutline();        
+    }
+
+    rysujProstokat(x0,y0,w,h) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x0-w/2, y0-h/2);
+        this.ctx.lineTo(x0+w/2, y0-h/2);    
+        this.ctx.lineTo(x0+w/2, y0+h/2);    
+        this.ctx.lineTo(x0-w/2, y0+h/2);    
         this.ctx.closePath();
         //the outline
         this.zrobOutline();        
@@ -54,6 +65,22 @@ class TMKanwa {
         this.ctx.closePath();
         //the outline
         this.zrobOutline();        
+    }
+
+    rysuj(i) {
+    //Rysowanie figury na kanwie o indeksie i    
+        switch(i) {
+            case 8:  this.rysujTrojkat(100,100,-10*(i+5)); break;
+            case 6:  this.rysujTrojkat(100,100,10*(i+6)); break;
+            case 5:  this.rysujOkrag(100,100,10*(i+1)); break;
+            case 4:  this.rysujKwadrat(100,100,110); break;            
+            case 7:  this.rysujProstokat(100,100,70,140); break; 
+            // default: this.rysujLinie(10,10,150,20*i);
+            case 0:  this.rysujProstokat(100,100,150,70); break;            
+            case 1:  this.rysujLinie(100,20,100,180); break;
+            case 2:  this.rysujLinie(30,30,170,170); break;
+            default: this.rysujLinie(20,100,180,100);
+        }
     }
 
 }   //koniec klasy TMKanwa
@@ -82,27 +109,30 @@ let handleKlikOnKanwa = function (event) {
         //Powiekszanie kliknietej:
         event.target.style.width  = "97%";
         event.target.style.height = "97%";
-        //Korygowanie marginesu kliknietej kanwy - doswiadczalnie w zaleznosci od wiersza:
+        //Korygowanie marginesu Top kliknietej kanwy - doswiadczalnie w zaleznosci od wiersza:
         event.target.style.marginTop = korektaMarginTop(indxKliknietej) ;
         stanDuza = true;
     }
     //Powrot do 9-ciu kmalych kanw:
     else {
-        event.target.style.width  = "32%";
-        event.target.style.height = "32%";
-        for (let i=0; i<kanwyObj.length; i++) {
-            (kanwyObj[i].kanwa.style.display = "inline-block")
-        }
+        //
+        window.location.reload(false); //false - wezmie z cache (if any)
+        return false; //podobno nalezy jesli refreshing after  onClick -> stackoverflow https://stackoverflow.com/questions/3715047/how-to-reload-a-page-using-javascript
+        // event.target.style.width  = "32%";
+        // event.target.style.height = "32%";
+        // for (let i=0; i<kanwyObj.length; i++) {
+            // (kanwyObj[i].kanwa.style.display = "inline-block")
+        // }
         stanDuza = false;
     }
 }
 
 function korektaMarginTop(idx) {
-//Zwraca wartosc o jaka nalezy skorygowac margines kanwy o indeksie idx,
+//Zwraca wartosc o jaka nalezy skorygowac margines malej kanwy o indeksie idx,
 //(invoked only if the canvas is enlarged)
-    var row = 0; //ktory to wiersz -> 0,1,2
-    row = Math.trunc(idx/3);
-    return -(row*18)+'px';
+    var row = 0; 
+    row = Math.trunc(idx/3); //ktory to wiersz -> 0,1,2
+    return -(row*18)+'px'; //18->doswiadczalnie....
 }
 
 
@@ -119,7 +149,7 @@ kanwyObj.forEach(elem=>elem.kanwa.onclick=handleKlikOnKanwa);
 // kanwyObj.forEach((elem,ind)=>elem.rysujLinie(10,10,150,20*ind));
 
 //rysowanie kola na kazdej:
-kanwyObj.forEach((elem,ind)=>elem.rysujOkrag(100,100,10*(ind+1)));
+// kanwyObj.forEach((elem,ind)=>elem.rysujOkrag(100,100,10*(ind+1)));
 
 
 //rysowanie kwadratu na kazdej:
@@ -127,9 +157,9 @@ kanwyObj.forEach((elem,ind)=>elem.rysujOkrag(100,100,10*(ind+1)));
 
 
 //rysowanie trojkata na kazdej:
-kanwyObj.forEach((elem,ind)=>elem.rysujTrojkat(100,100,10*(ind+1)));
+// kanwyObj.forEach((elem,ind)=>elem.rysujTrojkat(100,100,10*(ind+1)));
 
-
+kanwyObj.forEach((elem,idx)=>elem.rysuj(idx));
 
 
 
