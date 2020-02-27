@@ -107,6 +107,7 @@ class TMKanwa {
 
     odegrajNazwe(delay) {
     //Odegranie nazwy stowarzyszonej z konkretnym egzemplarzem (instancją) obiektu-kanwy    
+        if (this.plik === "snd/linia.ogg") delay *=5; //trzeba podrasowac, bo plik nakrany za "szybko"
         var nazwaSound = new Audio(this.plik);
         setTimeout(() => nazwaSound.play(), delay);
     }
